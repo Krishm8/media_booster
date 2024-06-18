@@ -5,7 +5,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:media_booster/controller/home_provider.dart';
 import 'package:media_booster/controller/theme_provider.dart';
+import 'package:media_booster/view/login1.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,30 +32,30 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Audio(
-          "assets/audio/sohigh.mp3",
+          "assets/audio/Invincible.mp3",
           metas: Metas(
-            title: "halki",
+            title: "Invincible",
             image: MetasImage.asset("assets/images/s2.jpg"),
           ),
         ),
         Audio(
-          "assets/audio/soulmate.mp3",
+          "assets/audio/Goat.mp3",
           metas: Metas(
-            title: "295",
+            title: "Goat",
             image: MetasImage.asset("assets/images/s3.jpg"),
           ),
         ),
         Audio(
-          "assets/audio/295.mp3",
+          "assets/audio/sohigh.mp3",
           metas: Metas(
-            title: "295",
+            title: "sohigh",
             image: MetasImage.asset("assets/images/s4.jpg"),
           ),
         ),
         Audio(
-          "assets/audio/295.mp3",
+          "assets/audio/MeraNa.mp3",
           metas: Metas(
-            title: "295",
+            title: "MeraNa",
             image: MetasImage.asset("assets/images/s5.jpg"),
           ),
         ),
@@ -63,6 +65,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  @override
+  void didChangeDependencies() {
+    SharedPreferences.getInstance().then((value) {
+      var name = value.getString("name");
+      Provider.of<HomeProvider>(context, listen: false).addData(name: name);
+    });
+    super.didChangeDependencies();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,6 +121,21 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         actions: [
+          IconButton(
+            onPressed: () async {
+              var instance = await SharedPreferences.getInstance();
+              instance.setBool("isLogin", false);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Login1();
+                  },
+                ),
+              );
+            },
+            icon: Icon(Icons.logout),
+          ),
           Icon(Icons.search),
           SizedBox(
             width: 10,
@@ -145,9 +170,14 @@ class _HomePageState extends State<HomePage> {
                 assetsAudioPlayer.playlist?.audios.length ?? 0,
                 (index) {
                   var audio = assetsAudioPlayer.playlist?.audios[index];
-                  return Image.asset(
-                    audio?.metas.image?.path ?? "",
-                    fit: BoxFit.cover,
+                  return InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, "detail");
+                    },
+                    child: Image.asset(
+                      audio?.metas.image?.path ?? "",
+                      fit: BoxFit.cover,
+                    ),
                   );
                 },
               ),
@@ -452,8 +482,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-/*
-Provider.of<ThemeProvider>(context, listen: false)
-                  .changeTheme();
- */

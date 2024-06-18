@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:media_booster/controller/home_provider.dart';
+import 'package:media_booster/view/login1.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -18,7 +20,27 @@ class _SignInPageState extends State<SignInPage> {
   TextEditingController bodcontroller = TextEditingController();
   TextEditingController phonecontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
-
+  //
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //
+  //   SharedPreferences.getInstance().then(
+  //         (pref) {
+  //       String isLogin = pref.getString("isLogin")??"";
+  //       if (isLogin != null) {
+  //         Navigator.pushReplacement(
+  //           context,
+  //           MaterialPageRoute(
+  //             builder: (context) {
+  //               return Login1();
+  //             },
+  //           ),
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,7 +165,7 @@ class _SignInPageState extends State<SignInPage> {
                   height: 20,
                 ),
                 InkWell(
-                  onTap: () {
+                  onTap: () async{
                     Provider.of<HomeProvider>(context, listen: false).addData(
                       name: namecontroller.text,
                       email: emailcontroller.text,
@@ -154,10 +176,13 @@ class _SignInPageState extends State<SignInPage> {
                     var isVal=skey.currentState?.validate()??false;
                     if (isVal) {
                       Navigator.pushReplacementNamed(context, "login1");
-                      } else {
-
+                      // var sp= await SharedPreferences.getInstance();
+                      // sp.setString("isLogin","${namecontroller.text}");
+                      // sp.setString("isLogin", "${emailcontroller.text}");
+                      // sp.setString("isLogin", "${bodcontroller.text}");
+                      // sp.setString("isLogin", "${phonecontroller.text}");
+                      // sp.setString("isLogin", "${passwordcontroller.text}");
                       }
-
                   },
                   child: Container(
                     width: 400,

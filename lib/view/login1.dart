@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:media_booster/controller/home_provider.dart';
+import 'package:media_booster/view/home.dart';
+import 'package:media_booster/view/login.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login1 extends StatefulWidget {
   const Login1({super.key});
@@ -13,14 +16,36 @@ class Login1 extends StatefulWidget {
 
 class _Login1State extends State<Login1> {
   GlobalKey<FormState> fkey = GlobalKey<FormState>();
-  TextEditingController phonecontroller=TextEditingController();
-  TextEditingController passwordcontroller=TextEditingController();
+  TextEditingController phonecontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  //
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //
+  //   SharedPreferences.getInstance().then(
+  //     (pref) {
+  //       String isLogin = pref.getString("isLogin")??"";
+  //       if (isLogin != null) {
+  //         Navigator.pushReplacement(
+  //           context,
+  //           MaterialPageRoute(
+  //             builder: (context) {
+  //               return HomePage();
+  //             },
+  //           ),
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
+
           Icon(Icons.language_sharp),
           SizedBox(
             width: 10,
@@ -99,15 +124,19 @@ class _Login1State extends State<Login1> {
                   height: 20,
                 ),
                 InkWell(
-                  onTap: () {
-                    var isVal=fkey.currentState?.validate()??false;
-                    if(phonecontroller.text== Provider.of<HomeProvider>(context,listen: false).phone
-                    &&
-                        passwordcontroller.text== Provider.of<HomeProvider>(context,listen: false).password
-                    ){
+                  onTap: () async {
+                    var isVal = fkey.currentState?.validate() ?? false;
+                    if (phonecontroller.text ==
+                            Provider.of<HomeProvider>(context, listen: false)
+                                .phone &&
+                        passwordcontroller.text ==
+                            Provider.of<HomeProvider>(context, listen: false)
+                                .password) {
                       Navigator.pushReplacementNamed(context, "home");
-                    }
-                    else{
+                      // var sv = await SharedPreferences.getInstance();
+                      // sv.setString("isLogin", "${phonecontroller.text}");
+                      // sv.setString("isLogin", "${passwordcontroller.text}");
+                    } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Invalid"),

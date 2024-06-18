@@ -14,15 +14,15 @@ class _VideoDemoState extends State<VideoDemo> {
   late ChewieController chewieController;
 
   List<String> videos = [
-    "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-    "https://videos.pexels.com/video-files/855029/855029-hd_1280_720_60fps.mp4",
-    "https://videos.pexels.com/video-files/4823938/4823938-hd_1080_1920_24fps.mp4"
+    "https://cdn.pixabay.com/video/2024/06/06/215500_large.mp4",
+    "https://cdn.pixabay.com/video/2023/08/01/174086-850404739_large.mp4",
+    "https://cdn.pixabay.com/video/2022/11/26/140521-775376205_tiny.mp4"
   ];
 
   @override
   void initState() {
     super.initState();
-    playNetworkVideo("https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4");
+    playNetworkVideo("https://cdn.pixabay.com/video/2024/06/06/215500_large.mp4");
   }
 
   void playNetworkVideo(String path) {
@@ -32,28 +32,6 @@ class _VideoDemoState extends State<VideoDemo> {
     });
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
-      subtitle: Subtitles(
-        [
-          Subtitle(
-            index: 0,
-            start: const Duration(seconds: 0),
-            end: const Duration(seconds: 4),
-            text: "Su karo cho ??",
-          ),
-          Subtitle(
-            index: 1,
-            start: const Duration(seconds: 4),
-            end: const Duration(seconds: 10),
-            text: "Tamne kv",
-          ),
-          Subtitle(
-            index: 2,
-            start: const Duration(seconds: 10),
-            end: const Duration(seconds: 16),
-            text: "??",
-          ),
-        ],
-      ),
     );
   }
 
@@ -63,41 +41,32 @@ class _VideoDemoState extends State<VideoDemo> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // AspectRatio(
-            //   aspectRatio: videoPlayerController.value.aspectRatio,
-            //   child: VideoPlayer(videoPlayerController),
-            // ),
             AspectRatio(
               aspectRatio: videoPlayerController.value.aspectRatio,
               child: Chewie(
                 controller: chewieController,
               ),
             ),
-            // SizedBox(
-            //   height: 50,
-            //   child: ListView.builder(
-            //       scrollDirection: Axis.horizontal,
-            //       itemBuilder: (context, index) {
-            //         return InkWell(
-            //           onTap: () {
-            //             playNetworkVideo(videos[index]);
-            //           },
-            //           child: Container(
-            //             color: Colors.black12,
-            //             margin: EdgeInsets.all(10),
-            //             child: Text("Video ${index + 1}"),
-            //           ),
-            //         );
-            //       },
-            //       itemCount: videos.length),
-            // ),
-            FloatingActionButton(
-              onPressed: () {
-                playNetworkVideo("https://videos.pexels.com/video-files/855029/855029-hd_1280_720_60fps.mp4");
-              },
-              child: Icon(Icons.play_arrow),
+            SizedBox(
+              height: 500,
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        playNetworkVideo(videos[index]);
+                      },
+                      child: Container(
+                        height: 100,
+                        width: 200,
+                        margin: EdgeInsets.only(top: 10,left: 20),
+                        color: Colors.black12,
+                        child: Center(child: Text("Video ${index + 1}")),
+                      ),
+                    );
+                  },
+                  itemCount: videos.length),
             ),
-
           ],
         ),
       ),
