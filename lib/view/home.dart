@@ -65,14 +65,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    SharedPreferences.getInstance().then((value) {
-      var name = value.getString("name");
-      Provider.of<HomeProvider>(context, listen: false).addData(name: name);
-    });
-    super.didChangeDependencies();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   SharedPreferences.getInstance().then((value) {
+  //     var name = value.getString("name");
+  //     Provider.of<HomeProvider>(context, listen: false).addData(name: name);
+  //   });
+  //   super.didChangeDependencies();
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -204,6 +204,9 @@ class _HomePageState extends State<HomePage> {
                   assetsAudioPlayer.playlist?.audios.length ?? 0,
                   (index) {
                     audio = assetsAudioPlayer.playlist?.audios[index];
+                    var img = assetsAudioPlayer.playlist?.audios[index].metas.image;
+                    print("img=====================>>>>>>>>>>>>>>>>>> $img");
+                    Provider.of<HomeProvider>(context,listen: false).sphoto(img: img);
                     return InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, "detail");

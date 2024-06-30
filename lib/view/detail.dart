@@ -7,7 +7,9 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:media_booster/controller/home_provider.dart';
 import 'package:media_booster/view/video.dart';
+import 'package:provider/provider.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -125,18 +127,18 @@ class _DetailPageState extends State<DetailPage>
 
                               return Image.asset(
                                 audio?.metas.image?.path ?? "",
+                                // "${Provider.of<HomeProvider>(context, listen: false).simg}",
                                 fit: BoxFit.cover,
                               );
                             },
                           ),
                           options: CarouselOptions(
-                            aspectRatio: 1.5,
-                              autoPlay: true,
+                              aspectRatio: 1.5,
+                              autoPlay: false,
                               enlargeFactor: 0.3,
                               enlargeCenterPage: true,
                               autoPlayInterval: Duration(milliseconds: 1000)),
                         ),
-
                         SizedBox(
                           height: 50,
                         ),

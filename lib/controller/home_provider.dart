@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 
 class HomeProvider extends ChangeNotifier {
@@ -18,4 +19,10 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+  MetasImage? simg;
+  void sphoto({var img}){
+    simg=img;
+    notifyListeners();
+  }
 }
